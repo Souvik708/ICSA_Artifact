@@ -1,0 +1,12 @@
+RestAPI :
+
+1.Normal: $ g++ -I../Crow/include -I../protos -I/usr/include/librdkafka -o RestAPI RestAPI.cpp ../protos/transa
+ction/transaction.pb.cc -lrdkafka -lprotobuf -lboost_system -pthread
+
+2.Class : $ g++ -I../Crow/include -I../protos -I/usr/include/librdkafka -o RestAPI_class RestAPI_class.cpp ../protos/transa
+ction/transaction.pb.cc -lrdkafka -lprotobuf -lboost_system -pthread
+
+3.Generating gtest for RestAPI : $ g++ -I../Crow/include -I../protos -I/usr/include \
+                                       -I/path/to/gtest/include -I/usr/include/google/protobuf \
+                                       -o test test_main.cpp ../protos/transaction.pb.cc \
+                                       -lrdkafka -lprotobuf -lgtest -lgtest_main -lpthread -lboost_system

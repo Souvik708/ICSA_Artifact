@@ -1,0 +1,22 @@
+{
+    "name": "Distributed Framework Dev Container",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+    },
+    "postCreateCommand": "cmake --version && g++ --version && git submodule update --init --recursive",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "remoteUser": "root"
+}

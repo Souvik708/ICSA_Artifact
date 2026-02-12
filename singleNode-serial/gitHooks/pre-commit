@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# pre-commit hook script that runs clang-format on staged C/C++ files.
+
+# Collect staged files that are new/modified/renamed, then filter by extension.
+FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(c|cpp|h|hpp)$')
+
+# If no files match, no need to run clang-format.
+[ -z "$FILES" ] && exit 0
+
+echo "Running clang-format on the following staged files:"
+echo "$FILES"
+echo
+
+# For each matching file, run clang-format, then re-stage it.
+for file in $FILES; do
+  if [ -f "$file" ]; then
+    clang-format -i "$file"
+    git add "$file"
+  fi
+done
+
+echo "clang-format completed. Proceeding with commit."
+exit 0

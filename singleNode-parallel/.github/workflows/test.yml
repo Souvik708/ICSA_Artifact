@@ -1,0 +1,56 @@
+name: Google Test CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  gtest-run:
+    name: Run Google Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 400
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Initialize and Update Git Submodules
+        run: git submodule update --init --recursive
+
+      - name: Install Core Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake unzip python3-pip protobuf-compiler libprotobuf-dev \
+            libboost-all-dev libssl-dev libcpprest-dev libboost-system-dev \
+            libcurl4-openssl-dev librdkafka-dev libasio-dev libgflags-dev \
+            nlohmann-json3-dev libgtest-dev librocksdb-dev \
+            libgrpc-dev libgrpc++-dev protobuf-compiler-grpc etcd-client libtbb-dev
+
+      - name: Install etcd-cpp-api
+        run: |
+          git clone --recurse-submodules https://github.com/etcd-cpp-apiv3/etcd-cpp-apiv3.git
+          sed -i '1i #include <cstdint>' etcd-cpp-apiv3/etcd/v3/Member.hpp
+          sed -i '1i #include <cstdint>' etcd-cpp-apiv3/src/v3/Member.cpp 
+          cd etcd-cpp-apiv3
+          mkdir build && cd build
+          cmake ..
+          sudo make -j4
+          sudo make install
+
+      - name: Build the Project
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+          make -j4
+
+      - name: Run Tests (GoogleTest)
+        run: |
+          cd build
+          ctest --output-on-failure

@@ -1,0 +1,27 @@
+name: Clang Format check
+
+on:
+  pull_request:
+    branches:
+      - main  
+  push:
+    branches:
+      - main  
+
+jobs:
+  clang-format-check:
+    name: Run Clang-Format Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Clang-Format
+        run: sudo apt-get install -y clang-format
+
+      - name: Check Clang-Format
+        run: |
+          find . -name "*.cpp" -o -name "*.h" -o -name "*.cc" | grep -v "./Crow/" | grep -v "./googletest/" | xargs clang-format --dry-run --Werror

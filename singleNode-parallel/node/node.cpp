@@ -20,7 +20,7 @@ blocksDB db;
 // Custom log handler to suppress Crow logs
 class NullLogger : public crow::ILogHandler {
  public:
-  void log(std::string /*message*/, crow::LogLevel /*level*/) override {
+  void log(std::string /*message*/, crow::LogLevel /*level*/) {
     // Do nothing (disable logging)
   }
 };

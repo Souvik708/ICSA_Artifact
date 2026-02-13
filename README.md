@@ -4,6 +4,16 @@ A C++-based distributed framework built with **CMake**, supporting REST APIs, cl
 
 ---
 
+```
+ICSA_ARTIFACT/
+├── BlockRaFT-distributed node --> BlockRaFT
+├── singleNode-parallel        --> Parallel execution mode
+├── singleNode-serial          --> Serial execution mode
+└── Experiment_files           --> All necessary exp related files
+```
+
+---
+
 ## Index
 
 - [1. Setup](#1-setup)
@@ -38,7 +48,7 @@ A C++-based distributed framework built with **CMake**, supporting REST APIs, cl
 The framework supports two deployment configurations:
 
 1. **Single Node Framework**
-2. **Distributed Node Framework**
+2. **BlockRaFT distributed Node Framework**
 
 ---
 
@@ -114,12 +124,50 @@ Copy the required module folder depending on the execution mode:
 Example:
 
 ```bash
+cd singleNode-serial
 multipass transfer -r ./ nodeS:singleNode-serial
+```
+OR,
+```bash
+cd singleNode-parallel
+multipass transfer -r ./ nodeS:singleNode-parallel
 ```
 
 ---
 
-## 1.2 Distributed Node Framework
+### 1.1.4 Building the Project
+
+Inside the VM:
+
+For **Serial** execution mode :
+
+```bash
+cd singleNode-serial
+mkdir -p build
+cd build
+cmake ..
+make
+```
+
+For **Parallel** execution mode :
+
+```bash
+cd singleNode-parallel
+mkdir -p build
+cd build
+cmake ..
+make
+```
+
+For verify the proper setup :
+```bash
+cd build 
+ctest
+```
+
+---
+
+## 1.2 BlockRaFT Distributed Node Framework
 
 This configuration runs the framework across multiple VMs (`node0`, `node1`, `node2`) using **etcd** and **Redpanda**.
 
@@ -171,8 +219,9 @@ multipass version
 ### 1.2.4 Creating Multipass VMs
 
 ```bash
+cd BlockRaFT-distributed node
 chmod +x autoDeploy.sh
-./autoDeploy.sh
+sudo ./autoDeploy.sh
 ```
 
 ---
@@ -246,62 +295,162 @@ cmake ..
 make
 ```
 
----
-
-# 2. Experiment Running
-
----
-
-## 2.1 Single Node Framework
-
-### 2.1.1 Serial Execution
-
+For verify the proper setup :
 ```bash
-./client
-```
-
-Used for correctness validation and baseline comparison.
-
----
-
-### 2.1.2 Parallel Execution
-
-```bash
-./client
-```
-
-Used for evaluating multi-core performance.
-
----
-
-## 2.2 Distributed Node Framework
-
-### 2.2.1 Running Tests
-
-```bash
+cd build 
 ctest
 ```
 
 ---
 
-### 2.2.2 Running Core Components
+---
+
+# 2. Experiment Configuration & Running
+
+This section explains how to configure and reproduce experiments.
+
+---
+
+## 2.1 Configuration File
+
+Each execution folder contains:
+
+```
+config.json
+```
+
+Example:
+
+```json
+{
+  "threadCount": 8,
+  "txnCount": 10000,
+  "blocks": 2,
+  "scheduler": "parallel",
+  "mode": "production"
+}
+```
+
+### Parameters
+
+- `threadCount` → Worker threads (parallel mode)
+- `txnCount` → Number of transactions
+- `blocks` → Blocks generated
+- `scheduler` → `"serial"` or `"parallel"`
+- `mode` → Execution mode
+
+---
+
+## 2.2 Experiment Workloads
+
+Located in:
 
 ```bash
-./RestAPI
-./client
+ICSA_ARTIFACT
+└──Experiment_files/
+   ├── Wallet/
+   └── Voting/
+```
+
+### File Naming Format
+
+```
+<TxnCount>-<ConflictPercentage>.txt
+```
+
+Examples:
+
+- `1000-0.txt`
+- `5000-50.txt`
+
+---
+
+## 2.3 Preparing an Experiment
+
+### A. Single Node Experiments
+
+### Step 1: Select Workload
+
+Choose from:
+
+```bash
+Experiment_files/Wallet/
+```
+or
+```bash
+Experiment_files/Voting/
 ```
 
 ---
 
-### 2.2.3 Monitoring Transactions
+### Step 2: Copy Transactions
+
+Copy into:
 
 ```bash
-rpk topic consume transaction_pool --brokers localhost:19092
-rpk cluster info -X brokers=localhost:19092
+singleNode-serial/testFile/testFile.txt
+```
+or
+```bash
+singleNode-parallel/testFile/testFile.txt
+```
+
+inside selected execution folder.
+
+---
+
+### Step 3: Copy Setup File
+
+Copy:
+
+```bash
+Experiment_files/Wallet/setup.txt
+```
+or
+```bash
+Experiment_files/Voting/setup.txt
+```
+
+**Copy into**:
+
+```bash
+singleNode-serial/testFile/setup.txt
+```
+or
+```bash
+singleNode-parallel/testFile/setup.txt
+```
+
+inside selected execution folder.
+
+### B. BlockRaFT - Distributed Node Experiments
+
+---
+
+## 2.4 Running Experiments
+
+---
+
+### Single Node — Serial
+
+```bash
+cd singleNode-serial/build
+./node
 ```
 
 ---
 
+### Single Node — Parallel
+
+```bash
+cd singleNode-parallel/build
+./node
+```
+
+### BlockRaFT-distributed node
+
+
+---
 ### 2.2.4 Cleaning Up
 
 ```bash

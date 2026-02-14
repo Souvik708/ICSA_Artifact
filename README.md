@@ -1,9 +1,13 @@
+BlockRaFT is a crash-tolerant and scalable distributed framework designed to improve the availability and performance of blockchain nodes, particularly in permissioned settings. Instead of replicating full nodes per organization, BlockRaFT distributes the internal workload of a single blockchain node across a cluster using a RAFT-based leader–follower architecture. This design preserves fairness in consensus while enabling scalability and resilience to node crashes. Additionally, the framework introduces a concurrent Merkle tree optimization that decouples smart contract execution from state updates, significantly reducing execution overhead. Experimental results demonstrate substantial performance improvements over traditional single-core and multi-core baselines while maintaining strong fault tolerance.
+
+To evaluate BlockRaFT, we compare our distributed framework against two single-node baselines: a serial scheduler and a parallel multi-core scheduler. The goal is to isolate the benefits of distributed workload partitioning and crash tolerance beyond local parallelism.
+
 # Distributed Framework
 
 A C++-based distributed framework built with **CMake**, supporting REST APIs, clients, DAG-based execution, protobuf-based communication, and coordination via **etcd** and **Redpanda**.
 
 ---
-
+**The repository is organized as follows:**
 ```
 ICSA_ARTIFACT/
 ├── BlockRaFT-distributed node --> BlockRaFT
@@ -13,36 +17,6 @@ ICSA_ARTIFACT/
 ```
 
 ---
-
-## Index
-
-- [1. Setup](#1-setup)
-  - [1.1 Single Node Framework](#11-single-node-framework)
-    - [1.1.1 Requirements](#111-requirements)
-    - [1.1.2 Install & VM Setup](#112-install--vm-setup)
-    - [1.1.3 Execution Modes](#113-execution-modes)
-  - [1.2 Distributed Node Framework](#12-distributed-node-framework)
-    - [1.2.1 Project Structure](#121-project-structure)
-    - [1.2.2 Requirements](#122-requirements-1)
-    - [1.2.3 Installing Multipass (Ubuntu)](#123-installing-multipass-ubuntu)
-    - [1.2.4 Creating Multipass VMs](#124-creating-multipass-vms)
-    - [1.2.5 Copying Project Files to VMs](#125-copying-project-files-to-vms)
-    - [1.2.6 Installing System Dependencies](#126-installing-system-dependencies)
-    - [1.2.7 Installing rpk (Redpanda CLI)](#127-installing-rpk-redpanda-cli)
-    - [1.2.8 Installing etcd-cpp-apiv3](#128-installing-etcd-cpp-apiv3)
-    - [1.2.9 Building the Project](#129-building-the-project)
-- [2. Experiment Running](#2-experiment-running)
-  - [2.1 Single Node Framework](#21-single-node-framework)
-    - [2.1.1 Serial Execution](#211-serial-execution)
-    - [2.1.2 Parallel Execution](#212-parallel-execution)
-  - [2.2 Distributed Node Framework](#22-distributed-node-framework)
-    - [2.2.1 Running Tests](#221-running-tests)
-    - [2.2.2 Running Core Components](#222-running-core-components)
-    - [2.2.3 Monitoring Transactions](#223-monitoring-transactions)
-    - [2.2.4 Cleaning Up](#224-cleaning-up)
-
----
-
 # 1. Setup
 
 The framework supports two deployment configurations:
@@ -76,7 +50,8 @@ Ensure the following are installed:
 ### 1.1.2 Install & VM Setup
 
 #### Install Multipass (Ubuntu)
-
+The VM is created using Multipass, and all dependencies are installed inside the VM. After building via CMake, correctness can be verified using ctest. 
+aq
 ```bash
 sudo snap install multipass
 ```

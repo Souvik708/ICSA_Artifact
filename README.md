@@ -18,7 +18,13 @@ ICSA_ARTIFACT/
 
 ---
 # 1. Setup
+The initial setup requires more than 30 minutes, primarily due to the following steps: 
+1. Provisioning and configuring multiple virtual machines (VMs) to emulate a distributed cluster environment.
+2. Installation and configuration of etcd for distributed coordination and RAFT-based leader election.
+3. Installation of required dependencies including: Google Protocol Buffers (protobuf) for serialization.
+4. Google Test (gtest) for unit testing.
 
+The setup time may vary depending on system configuration, network bandwidth, and VM provisioning speed.
 The framework supports two deployment configurations:
 
 1. **Single Node Framework**

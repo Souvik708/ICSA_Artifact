@@ -10,7 +10,7 @@ A C++-based distributed framework built with **CMake**, supporting REST APIs, cl
 **The repository is organized as follows:**
 ```
 ICSA_ARTIFACT/
-├── BlockRaFT-distributed node --> BlockRaFT
+├── BlockRaFT-distributed_node --> BlockRaFT
 ├── singleNode-parallel        --> Parallel execution mode
 ├── singleNode-serial          --> Serial execution mode
 └── Experiment_files           --> All necessary exp related files
@@ -210,7 +210,7 @@ sudo multipass version
 ### 1.2.4 Creating Multipass VMs
 
 ```bash
-cd BlockRaFT-distributed node
+cd BlockRaFT-distributed_node
 chmod +x autoDeploy.sh
 sudo ./autoDeploy.sh
 ```
@@ -470,7 +470,7 @@ cd singleNode-parallel/build
 Run the below mentioned command in each VMs for example for 3 Node setup i.e (`node0`, `node1`, `node2`).
 
 ```bash
-cd BlockRAFT-distributed\ node/build
+cd BlockRAFT-distributed_node/build
 ./node
 ```
 

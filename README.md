@@ -58,6 +58,12 @@ Ensure the following are installed:
 #### Install Multipass (Ubuntu)
 The VM is created using Multipass, and all dependencies are installed inside the VM. After building via CMake, correctness can be verified using ctest. 
 aq
+
+Install snap in case not availbale
+```bash
+sudo apt update
+sudo apt install snapd
+```
 ```bash
 sudo snap install multipass
 ```

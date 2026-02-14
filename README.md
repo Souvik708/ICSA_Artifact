@@ -73,6 +73,10 @@ Verify installation:
 ```bash
 sudo multipass version
 ```
+1. Clone the repo in your system
+2. ```bash
+sudo multipass version
+```
 
 #### Create Single Node VM
 

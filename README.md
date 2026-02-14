@@ -367,8 +367,6 @@ Examples:
 
 ## 2.3 Preparing an Experiment
 
-### A. Single Node Experiments
-
 ### Step 1: Select Workload
 
 Choose from:
@@ -382,6 +380,7 @@ Experiment_files/Voting/
 ```
 
 ---
+### A. Single Node Experiments
 
 ### Step 2: Copy Transactions
 
@@ -393,6 +392,18 @@ singleNode-serial/testFile/testFile.txt
 or
 ```bash
 singleNode-parallel/testFile/testFile.txt
+```
+
+inside selected execution folder.
+
+### B. BlockRaFT - Distributed Node Experiments
+
+### Step 2: Copy Transactions
+
+Copy into:
+
+```bash
+BlockRAFT-distributed\ node/leader/testFile.txt
 ```
 
 inside selected execution folder.
@@ -425,6 +436,22 @@ inside selected execution folder.
 
 ### B. BlockRaFT - Distributed Node Experiments
 
+### Step 3: Copy Setup File
+
+Copy:
+
+```bash
+Experiment_files/Wallet/setup.txt
+```
+
+**Copy into**:
+
+```bash
+BlockRAFT-distributed\ node/leader/setupFile.txt
+```
+
+inside selected execution folder.
+
 ---
 
 ## 2.4 Running Experiments
@@ -449,6 +476,12 @@ cd singleNode-parallel/build
 
 ### BlockRaFT-distributed node
 
+Run the below mentioned command in each VMs for example for 3 Node setup i.e (`node0`, `node1`, `node2`).
+
+```bash
+cd BlockRAFT-distributed\ node/build
+./node
+```
 
 ---
 ### 2.2.4 Cleaning Up
@@ -461,9 +494,22 @@ multipass purge
 
 ---
 
-## Notes
+# 3. Reproducibility Guidelines
+
+To reproduce results reported in the paper:
+
+- Use identical `config.json` parameters
+- Use the same workload file
+- Use identical VM specs
+- Avoid background workloads
+- Run multiple iterations and report averages
+
+---
+
+# Notes
 
 - All distributed nodes must use identical builds.
-- Ensure required ports for etcd and Redpanda are open.
-- Follow consistent startup order for reproducible results.
+- Ensure etcd and Redpanda ports are open.
+- Maintain consistent startup order.
+- Recommended VM: 8 CPUs, 10GB RAM.
 

@@ -71,19 +71,19 @@ sudo snap install multipass
 Verify installation:
 
 ```bash
-multipass version
+sudo multipass version
 ```
 
 #### Create Single Node VM
 
 ```bash
-multipass launch -n nodeS --cpus 8 --mem 10G --disk 20G 24.04
+sudo multipass launch -n nodeS --cpus 8 --mem 10G --disk 20G 24.04
 ```
 
 Enter the VM:
 
 ```bash
-multipass shell nodeS
+sudo multipass shell nodeS
 ```
 
 #### Install Dependencies Inside VM
@@ -112,12 +112,12 @@ Example:
 
 ```bash
 cd singleNode-serial
-multipass transfer -r ./ nodeS:singleNode-serial
+sudo multipass transfer -r ./ nodeS:singleNode-serial
 ```
 OR,
 ```bash
 cd singleNode-parallel
-multipass transfer -r ./ nodeS:singleNode-parallel
+sudo multipass transfer -r ./ nodeS:singleNode-parallel
 ```
 
 ---
@@ -198,7 +198,7 @@ sudo snap install multipass
 Verify installation:
 
 ```bash
-multipass version
+sudo multipass version
 ```
 
 ---
@@ -216,21 +216,21 @@ sudo ./autoDeploy.sh
 ### 1.2.5 Copying Project Files to VMs
 
 ```bash
-multipass transfer -r ./ node0:Distributed_Framework
-multipass transfer -r ./ node1:Distributed_Framework
-multipass transfer -r ./ node2:Distributed_Framework
+sudo multipass transfer -r ./ node0:Distributed_Framework
+sudo multipass transfer -r ./ node1:Distributed_Framework
+sudo multipass transfer -r ./ node2:Distributed_Framework
 ```
 
 ---
 
 ### 1.2.6 Installing System Dependencies
 
-Enter each VM:
+Enter each VM in three different terminals:
 
 ```bash
-multipass shell node0
-multipass shell node1
-multipass shell node2
+sudo multipass shell node0
+sudo multipass shell node1
+sudo multipass shell node2
 ```
 
 Install dependencies inside each VM:
@@ -474,9 +474,9 @@ cd BlockRAFT-distributed\ node/build
 ### 2.2.4 Cleaning Up
 
 ```bash
-multipass stop node0 node1 node2
-multipass delete node0 node1 node2
-multipass purge
+sudo multipass stop node0 node1 node2
+sudo multipass delete node0 node1 node2
+sudo multipass purge
 ```
 
 ---

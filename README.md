@@ -2,7 +2,7 @@ BlockRaFT is a crash-tolerant and scalable distributed framework designed to imp
 
 To evaluate BlockRaFT, we compare our distributed framework against two single-node baselines: a serial scheduler and a parallel multi-core scheduler. The goal is to isolate the benefits of distributed workload partitioning and crash tolerance beyond local parallelism.
 
-# Distributed Framework
+# BlockRaFT Distributed Framework
 
 A C++-based distributed framework built with **CMake**, supporting REST APIs, clients, DAG-based execution, protobuf-based communication, and coordination via **etcd** and **Redpanda**.
 
@@ -31,7 +31,6 @@ The framework supports two deployment configurations:
 2. **BlockRaFT distributed Node Framework**
 
 ---
-
 ## 1.1 Single Node Framework
 
 This configuration runs the framework on a single machine using one VM (`nodeS`).
@@ -71,10 +70,6 @@ sudo snap install multipass
 Verify installation:
 
 ```bash
-sudo multipass version
-```
-1. Clone the repo in your system
-2. ```bash
 sudo multipass version
 ```
 

@@ -389,7 +389,7 @@ inside selected execution folder.
 Copy into:
 
 ```bash
-BlockRAFT-distributed\ node/leader/testFile.txt
+BlockRAFT-distributed_node/leader/testFile.txt
 ```
 
 inside selected execution folder.
@@ -433,7 +433,7 @@ Experiment_files/Wallet/setup.txt
 **Copy into**:
 
 ```bash
-BlockRAFT-distributed\ node/leader/setupFile.txt
+BlockRAFT-distributed_node/leader/setupFile.txt
 ```
 
 inside selected execution folder.
